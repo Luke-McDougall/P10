@@ -111,6 +111,7 @@ class SortsTestHarness
                         case 'm' : Sorts.mergeSort(A); break;
                         case 'i' : Sorts.insertionSort(A); break;
                         case 'h' : Sorts.shellSort(A); break;
+                        case 'r' : Sorts.radixLSD10(A); break;
                         default :
                             throw new IllegalArgumentException("Unsupported sort type " + sortType);
                     }

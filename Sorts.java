@@ -66,8 +66,8 @@ class Sorts
     //shell sort
     public static void shellSort(int[] A)
     {
-        int gap = (A.length / 3) | 1;
         int len = A.length;
+        int gap = getGap(len); 
         while(gap > 0)
         {
             for(int z = 0; z < gap; z++)
@@ -84,8 +84,21 @@ class Sorts
                     A[j] = temp;
                 }
             }
-            gap -= 2;
+            gap = gap >> 1;
         }
+    }
+
+    //Returns a number in the form (2 power k) - 1
+    private static int getGap(int len)
+    {
+        int n = 30;
+        int gap;
+        while(len >> n != 1)
+        {
+            n--;
+        }
+        gap = len & (1 << n);
+        return gap - 1;
     }
 
     // mergeSort - front-end for kick-starting the recursive algorithm
@@ -190,5 +203,65 @@ class Sorts
         return newPivotIdx;
     }//doPartitioning
 
+    public static void countingSort(int[] A, int digit)
+    {
+        int[] count = new int[10];
+        int[] output = new int[A.length];
+        Arrays.fill(count, 0);
+        for(int i = 0; i < A.length; i++)
+        {
+            ++count[getDigit(A[i], digit)];
+        }
+        for(int k = 1; k < count.length; k++)
+        {
+            count[k] = count[k] + count[k-1];
+        }
+        for(int o = 0; o < A.length; o++)
+        {
+            output[count[getDigit(A[o], digit)] - 1] = A[o];
+            count[getDigit(A[o], digit)]--;
+        }
+        for(int p = 0; p < A.length; p++)
+        {
+            A[p] = output[p];
+        }
+    }
 
+    public static void radixLSD10(int[] A)
+    {
+        int maxDigit = numDigits(getMax(A));
+        for(int i = 0; i <= maxDigit; i++)
+        {
+            countingSort(A, i);
+        }
+    }
+    
+    private static int getMax(int[] A)
+    {
+        int max = 0;
+        for(Integer e : A)
+        {
+            max = e > max ? e : max;
+        }
+        return max;
+    }
+    
+    private static int getDigit(int num, int digit)
+    {
+        int numDigits = numDigits(num); 
+        int retval = 0;
+        int div = 1;
+        for(int i = 0; i < digit; i++)
+        {
+            div *= 10;
+        }
+        retval = num / div;
+        retval = retval % 10;
+        return retval;
+    }
+
+    private static int numDigits(int num)
+    {
+        return (int)(Math.log(num) / Math.log(10));
+    }
 }//end Sorts calss
