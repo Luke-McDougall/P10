@@ -230,7 +230,7 @@ class Sorts
     public static void radixLSD10(int[] A)
     {
         int maxDigit = numDigits(getMax(A));
-        for(int i = 0; i <= maxDigit; i++)
+        for(int i = maxDigit; i >= 0 ; i--)
         {
             countingSort(A, i);
         }
