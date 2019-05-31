@@ -78,7 +78,7 @@ class Sorts
                     int temp = A[j];
                     while(j >= gap && A[j-gap] > temp)
                     {
-                        A[j] = A[j-gap];    //move element j-1 right by one
+                        A[j] = A[j-gap];    //move element j-gap right by gap
                         j -= gap;
                     }
                     A[j] = temp;
@@ -244,7 +244,7 @@ class Sorts
             max = e > max ? e : max;
         }
         return max;
-    }
+
     
     private static int getDigit(int num, int digit)
     {
